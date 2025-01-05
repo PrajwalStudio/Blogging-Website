@@ -57,7 +57,7 @@ ByteBlog is a dynamic blogging platform integrated with a Quora-like question an
 ## Screenshots
 
 ### Home Page
-![Home Page](blog/project/uploaded_img/home.jpeg')
+![Home Image](uploaded_img/home.jpeg)
 
 ### Blog Post
 ![Blog Post](screenshots/blog_post.png)
