@@ -3,14 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2024 at 06:33 PM
+-- Generation Time: Jan 05, 2025 at 08:19 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -33,13 +32,6 @@ CREATE TABLE `admin` (
   `password` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`id`, `name`, `password`) VALUES
-(1, 'admin', '6216f8a75fd5bb3d5f22b6f9958cdede3fc086c2');
-
 -- --------------------------------------------------------
 
 --
@@ -52,6 +44,24 @@ CREATE TABLE `answers` (
   `user_id` int(11) NOT NULL,
   `answer` varchar(1000) NOT NULL,
   `date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blog`
+--
+
+CREATE TABLE `blog` (
+  `id` int(100) NOT NULL,
+  `admin_id` int(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `content` varchar(10000) NOT NULL,
+  `category` varchar(50) NOT NULL,
+  `image` varchar(100) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp(),
+  `status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -73,32 +83,14 @@ CREATE TABLE `comments` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `likes`
---
-
-CREATE TABLE `likes` (
-  `id` int(100) NOT NULL,
-  `user_id` int(100) NOT NULL,
-  `admin_id` int(100) NOT NULL,
-  `post_id` int(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `posts`
 --
 
 CREATE TABLE `posts` (
   `id` int(100) NOT NULL,
+  `user_id` int(100) NOT NULL,
   `admin_id` int(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `title` varchar(100) NOT NULL,
-  `content` varchar(10000) NOT NULL,
-  `category` varchar(50) NOT NULL,
-  `image` varchar(100) NOT NULL,
-  `date` date NOT NULL DEFAULT current_timestamp(),
-  `status` varchar(10) NOT NULL
+  `post_id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -147,23 +139,23 @@ ALTER TABLE `answers`
   ADD KEY `question_id` (`question_id`);
 
 --
+-- Indexes for table `blog`
+--
+ALTER TABLE `blog`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `likes`
---
-ALTER TABLE `likes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
-
---
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `quora`
@@ -185,7 +177,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `answers`
@@ -194,15 +186,15 @@ ALTER TABLE `answers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `comments`
+-- AUTO_INCREMENT for table `blog`
 --
-ALTER TABLE `comments`
+ALTER TABLE `blog`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `likes`
+-- AUTO_INCREMENT for table `comments`
 --
-ALTER TABLE `likes`
+ALTER TABLE `comments`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
@@ -222,6 +214,7 @@ ALTER TABLE `quora`
 --
 ALTER TABLE `users`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
